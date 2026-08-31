@@ -1,3 +1,21 @@
+Metadata-Version: 2.4
+Name: sumdiff
+Version: 0.1.0a1
+Summary: Lightweight multi-document compare, merge and parallel editing for the Sum ecosystem.
+Author-email: William Martinez Bas <metfar@gmail.com>
+License: GPL-2.0-or-later
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Software Development :: Version Control
+Classifier: Topic :: Text Editors
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: sumtui>=0.5.29
+Dynamic: license-file
+
 # sumdiff
 
 `sumdiff` is the lightweight comparison, merge and parallel-document editor of the **Sum** ecosystem. It is a separate application built on `sumTUI`; `sumTUI` provides the editor, workspace windows, mouse support, resizing, menus, Markdown rendering and persistent window geometry, while `sumdiff` provides the semantics of related documents.
