@@ -149,12 +149,18 @@ class DocumentPane:
 
 
 class SumDiffApp:
-    def __init__(self, paths, mode="compare", theme=None, ignore_whitespace=False):
-        self.paths = [Path(path).expanduser() for path in paths];
+    def __init__(self, paths, mode="compare", theme=None, ignore_whitespace=False, text_overrides=None):
+        self.paths = [Path(path).expanduser().resolve() for path in paths];
         if len(self.paths) < 2:
             raise ValueError("sumdiff requires at least two files");
         self.app = Application(title="sumdiff", theme=theme or "Ralesk's MC", capture_control_keys=True, mouse=True);
         self.documents = [TextDocument.load(path) for path in self.paths];
+        overrides = {Path(path).expanduser().resolve(): str(text) for path, text in dict(text_overrides or {}).items()};
+        for document in self.documents:
+            key = Path(document.path).expanduser().resolve();
+            if key in overrides:
+                document.text = overrides[key];
+        self.saved_paths = set();
         states = [DocumentState(document.path, document.text) for document in self.documents];
         self.session = ComparisonSession(states, mode=mode, ignore_whitespace=ignore_whitespace);
         self.sync_scrolling = True;
@@ -328,6 +334,7 @@ class SumDiffApp:
         pane = self.active_pane();
         try:
             target = pane.save();
+            self.saved_paths.add(Path(target).expanduser().resolve());
             self.update_status("Saved {}".format(target));
             return True;
         except Exception as exc:
@@ -338,7 +345,8 @@ class SumDiffApp:
         for pane in self.panes:
             if pane.editor.modified:
                 try:
-                    pane.save();
+                    target = pane.save();
+                    self.saved_paths.add(Path(target).expanduser().resolve());
                 except Exception as exc:
                     self.update_status("Save error: {}".format(exc));
                     return False;
@@ -575,7 +583,7 @@ class SumDiffApp:
             self.app.focus.set(pane.editor);
             self.app.invalidate();
             return True;
-        text = "sumdiff 0.1.0a1\nMulti-document Compare / Merge / Parallel Documents\nBuilt on sumTUI.";
+        text = "sumdiff 0.1.0a2\nMulti-document Compare / Merge / Parallel Documents\nBuilt on sumTUI.";
         self.app.push_modal(Dialog(VBox(Label(text), Button("Close", on_press=close, default=True)), title="About sumdiff", width=62, height=9, on_cancel=close, shadow=True));
         self.app.invalidate();
         return True;

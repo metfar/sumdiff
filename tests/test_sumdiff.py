@@ -138,3 +138,29 @@ class AppConstructionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main();
+
+class HostIntegrationTests(unittest.TestCase):
+    def test_text_override_uses_live_host_buffer_without_touching_disk(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory);
+            left = root / "left.md";
+            right = root / "right.md";
+            left.write_text("saved left\n", encoding="utf-8");
+            right.write_text("saved right\n", encoding="utf-8");
+            application = SumDiffApp([left, right], text_overrides={left: "live left\n"});
+            self.assertEqual(application.panes[0].editor.text, "live left\n");
+            self.assertEqual(left.read_text(encoding="utf-8"), "saved left\n");
+
+    def test_saved_paths_records_files_changed_inside_sumdiff(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory);
+            left = root / "left.txt";
+            right = root / "right.txt";
+            left.write_text("one\n", encoding="utf-8");
+            right.write_text("two\n", encoding="utf-8");
+            application = SumDiffApp([left, right]);
+            application.workspace.activate(application.panes[0].window);
+            application.panes[0].editor.set_text("changed\n", modified=True);
+            self.assertTrue(application.save_current());
+            self.assertIn(left.resolve(), application.saved_paths);
+            self.assertEqual(left.read_text(encoding="utf-8"), "changed\n");

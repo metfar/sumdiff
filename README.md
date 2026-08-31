@@ -4,6 +4,9 @@
 
 The first alpha deliberately supports **more than two documents**. This makes it useful not only for version comparison, but also for translations, teaching and comparative programming.
 
+
+From `0.1.0a2`, Sum editors can launch the same application directly through the optional sumTUI 0.6 integration. A host can supply the current in-memory text for a real file path, so unsaved edits appear immediately in the comparison while Save still targets the original file. The host can inspect which paths were saved and reload only those documents when `sumdiff` closes.
+
 ```bash
 sumdiff old.py new.py
 sumdiff fr.md es.md en.md
@@ -115,7 +118,7 @@ sumdiff
 
 ## Development status
 
-`0.1.0a1` is the first functional alpha. The intentionally small next steps are character-level diff painting, richer hunk controls between panes, opening/closing documents from inside the workspace, and later a three-way merge mode. The underlying data model already keeps the diff engine separate so those additions do not require redesigning the editor.
+`0.1.0a2` is the current functional alpha. The intentionally small next steps are character-level diff painting, richer hunk controls between panes, opening/closing documents from inside the workspace, and later a three-way merge mode. The underlying data model already keeps the diff engine separate so those additions do not require redesigning the editor.
 
 ## License
 

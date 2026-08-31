@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0a2
+
+- Updated the dependency to `sumTUI >= 0.6.0` for integrated editor/IDE handoff.
+- `SumDiffApp` accepts per-path `text_overrides`, allowing sumedit/sumIDE/sumBASIC/sumX to compare their current unsaved in-memory buffers without first writing them to disk.
+- Added `saved_paths` tracking so a host editor knows exactly which source files were written from inside sumdiff and can safely reload only those buffers.
+- Added regression coverage for live-buffer overrides and saved-path reporting. Regression suite: 14 tests.
+
 ## 0.1.0a1
 
 Initial `sumdiff` alpha.
