@@ -541,16 +541,58 @@ class SumDiffApp:
         ];
         return MenuBar([
             Menu("File", [MenuItem("Save current", self.save_current, "Ctrl+S"), MenuItem("Save all", self.save_all), Separator(), MenuItem("Exit", self.quit, "Ctrl+Q")]),
-            Menu("Edit", [MenuItem("Undo", lambda: self.active_pane().editor.undo(), "Ctrl+Z"), MenuItem("Redo", lambda: self.active_pane().editor.redo(), "Ctrl+Y"), Separator(), MenuItem("Cut", lambda: self.active_pane().editor.cut(), "Ctrl+X"), MenuItem("Copy", lambda: self.active_pane().editor.copy(), "Ctrl+C"), MenuItem("Paste", lambda: self.active_pane().editor.paste(), "Ctrl+V")]),
+            Menu("Edit", [
+                MenuItem("Undo", lambda: self.active_pane().editor.undo(), "Ctrl+Z"),
+                MenuItem("Redo", lambda: self.active_pane().editor.redo(), "Ctrl+Y"),
+                Separator(),
+                MenuItem("Cut", lambda: self.active_pane().editor.cut(), "Ctrl+X"),
+                MenuItem("Copy", lambda: self.active_pane().editor.copy(), "Ctrl+C"),
+                MenuItem("Paste", lambda: self.active_pane().editor.paste(), "Ctrl+V"),
+                Separator(),
+                MenuItem("Tabs -> {} spaces".format(self.active_pane().editor.tab_size), self.tabs_to_spaces),
+                MenuItem("{} spaces -> Tabs".format(self.active_pane().editor.tab_size), self.spaces_to_tabs),
+                MenuItem("Tab width", submenu=Menu("Tab width", [
+                    MenuItem("2", lambda: self.set_tab_width(2), radio=lambda: self.active_pane().editor.tab_size == 2),
+                    MenuItem("4", lambda: self.set_tab_width(4), radio=lambda: self.active_pane().editor.tab_size == 4),
+                    MenuItem("8", lambda: self.set_tab_width(8), radio=lambda: self.active_pane().editor.tab_size == 8),
+                ])),
+            ]),
             Menu("Navigate", [MenuItem("Program Map / Outline...", self.symbol_map_dialog, "F2"), Separator(), MenuItem("Next difference", lambda: self.next_difference(1), "F7"), MenuItem("Previous difference", lambda: self.next_difference(-1), "Shift+F7")]),
             compare_menu,
             Menu("View", [MenuItem("Markdown Preview...", self.markdown_preview), Separator(), MenuItem("Side by Side", self.arrange_side_by_side), MenuItem("Grid", self.arrange_grid)]),
             Menu("Window", window_items),
             Menu("Help", [MenuItem("About", self.about)]),
-        ], mnemonics=True);
+        ], mnemonics=False);
 
     def _open_menu(self, index):
         return self.menu.open(index);
+
+    def _refresh_menu(self):
+        rebuilt = self._build_menu();
+        self.menu.menus = rebuilt.menus;
+        self.app.invalidate();
+        return True;
+
+    def set_tab_width(self, width):
+        width = max(1, int(width));
+        for pane in self.panes:
+            pane.editor.tab_size = width;
+        self.update_status("Tab width {}".format(width));
+        return self._refresh_menu();
+
+    def tabs_to_spaces(self):
+        editor = self.active_pane().editor;
+        changed = editor.tabs_to_spaces();
+        if changed:
+            self.update_status("Converted tabs to {} spaces in {}".format(editor.tab_size, self.active_pane().state.name));
+        return changed;
+
+    def spaces_to_tabs(self):
+        editor = self.active_pane().editor;
+        changed = editor.spaces_to_tabs();
+        if changed:
+            self.update_status("Converted groups of {} spaces to tabs in {}".format(editor.tab_size, self.active_pane().state.name));
+        return changed;
 
     def _bind_keys(self):
         bindings = {
@@ -569,7 +611,7 @@ class SumDiffApp:
             "alt+n": lambda: self._open_menu(2),
             "alt+c": lambda: self._open_menu(3),
             "alt+v": lambda: self._open_menu(4),
-            "alt+w": lambda: self._open_menu(5),
+            "alt+i": lambda: self._open_menu(5),
             "alt+h": lambda: self._open_menu(6),
         };
         for key, callback in bindings.items():
@@ -583,7 +625,7 @@ class SumDiffApp:
             self.app.focus.set(pane.editor);
             self.app.invalidate();
             return True;
-        text = "sumdiff 0.1.0a2\nMulti-document Compare / Merge / Parallel Documents\nBuilt on sumTUI.";
+        text = "sumdiff 0.2.0\nMulti-document Compare / Merge / Parallel Documents\nBuilt on sumTUI.";
         self.app.push_modal(Dialog(VBox(Label(text), Button("Close", on_press=close, default=True)), title="About sumdiff", width=62, height=9, on_cancel=close, shadow=True));
         self.app.invalidate();
         return True;

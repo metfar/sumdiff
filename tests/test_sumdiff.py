@@ -121,6 +121,18 @@ class AppConstructionTests(unittest.TestCase):
             self.assertIn(0, application.panes[0].marker.marks);
             self.assertIn(0, application.panes[1].marker.marks);
 
+    def test_window_uses_alt_i_and_editor_keeps_alt_w(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory);
+            left = root / "left.txt";
+            right = root / "right.txt";
+            left.write_text("casa roja", encoding="utf-8");
+            right.write_text("other", encoding="utf-8");
+            application = SumDiffApp([left, right], mode="compare");
+            self.assertIn("alt+i", application.app.bindings);
+            self.assertNotIn("alt+w", application.app.bindings);
+            self.assertFalse(application.menu.mnemonics);
+
     def test_reset_layout_is_side_by_side(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory);

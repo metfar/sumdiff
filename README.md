@@ -2,10 +2,10 @@
 
 `sumdiff` is the lightweight comparison, merge and parallel-document editor of the **Sum** ecosystem. It is a separate application built on `sumTUI`; `sumTUI` provides the editor, workspace windows, mouse support, resizing, menus, Markdown rendering and persistent window geometry, while `sumdiff` provides the semantics of related documents.
 
-The first alpha deliberately supports **more than two documents**. This makes it useful not only for version comparison, but also for translations, teaching and comparative programming.
+The design deliberately supports **more than two documents**. This makes it useful not only for version comparison, but also for translations, teaching and comparative programming.
 
 
-From `0.1.0a2`, Sum editors can launch the same application directly through the optional sumTUI 0.6 integration. A host can supply the current in-memory text for a real file path, so unsaved edits appear immediately in the comparison while Save still targets the original file. The host can inspect which paths were saved and reload only those documents when `sumdiff` closes.
+In `0.2.0`, Sum editors can launch the same application directly through the optional sumTUI 0.7 integration. A host can supply the current in-memory text for a real file path, so unsaved edits appear immediately in the comparison while Save still targets the original file. The host can inspect which paths were saved and reload only those documents when `sumdiff` closes.
 
 ```bash
 sumdiff old.py new.py
@@ -30,7 +30,7 @@ Compare mode uses a line-oriented diff engine and marks changed lines in a small
 -  removed line
 ```
 
-The first alpha supports next/previous difference navigation and two-way transfer of the current hunk when exactly two documents are open. Both buffers remain editable and each document is saved independently.
+Compare mode supports next/previous difference navigation and two-way transfer of the current hunk when exactly two documents are open. Both buffers remain editable and each document is saved independently.
 
 The core diff engine is isolated from the TUI. `DiffResult` exposes hunks, line mapping and intraline spans, so a future renderer can add finer character-level highlighting without changing the application model.
 
@@ -85,11 +85,13 @@ Alt+E       Edit menu
 Alt+N       Navigate menu
 Alt+C       Compare menu
 Alt+V       View menu
-Alt+W       Window menu
+Alt+I       Window menu
+Alt+W       Delete through next word boundary
+Ctrl+Alt+W  Delete previous word/separator segment
 Alt+H       Help menu
 ```
 
-The editor keeps the normal `sumTUI` Cut/Copy/Paste and Undo/Redo keys, including `Ctrl+X` for Cut.
+The editor keeps the normal `sumTUI` Cut/Copy/Paste and Undo/Redo keys, including `Ctrl+X` for Cut. `Tab` / `Shift+Tab` indents/unindents selected lines. The Edit menu can convert literal tabs to the configured number of spaces, or fixed groups of spaces back to tabs.
 
 ## Safety
 
@@ -118,7 +120,7 @@ sumdiff
 
 ## Development status
 
-`0.1.0a2` is the current functional alpha. The intentionally small next steps are character-level diff painting, richer hunk controls between panes, opening/closing documents from inside the workspace, and later a three-way merge mode. The underlying data model already keeps the diff engine separate so those additions do not require redesigning the editor.
+`0.2.0` is the current coordinated release. The intentionally small next steps are character-level diff painting, richer hunk controls between panes, opening/closing documents from inside the workspace, and later a three-way merge mode. The underlying data model already keeps the diff engine separate so those additions do not require redesigning the editor.
 
 ## License
 

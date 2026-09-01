@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.0 - 2026-09-01
+
+- Promoted the compare/parallel editor to the current Sum editor baseline and now requires `sumTUI >= 0.7.0`.
+- All comparison panes inherit `Alt+W` / `Ctrl+Alt+W`, selected-block `Tab` / `Shift+Tab`, configurable indentation widths, and whole-document tabs/spaces conversion from the common editor engine.
+- Window remains on `Alt+I`, so `Alt+W` is never stolen from text editing.
+- Preserved live-buffer integration used by `sumedit`/`sumIDE`/language launchers: unsaved host text can be compared without touching disk, and saved paths are reported back to the host for safe reload.
+- `sumdiff` remains an optional separate application depending on `sumTUI`; `sumTUI` does not depend on `sumdiff`, and `sumdiff` does not depend on `sumIDE`.
+
+## 0.1.0a3
+
+- Adopted sumTUI 0.6.1 Alt+W / Ctrl+Alt+W deletion and block Tab/Shift+Tab indentation in every comparison pane.
+- Reassigned Window to **Alt+I** and disabled automatic menu mnemonics so Alt+W remains an editor command.
+- Added active-document Tabs -> N spaces and N spaces -> Tabs conversions plus a shared 2/4/8 tab-width selector.
+- Updated dependency to `sumtui>=0.6.1`. Regression suite: 15 tests.
+
 ## 0.1.0a2
 
 - Updated the dependency to `sumTUI >= 0.6.0` for integrated editor/IDE handoff.
