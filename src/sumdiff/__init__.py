@@ -20,7 +20,7 @@
 #  MA 02110-1301, USA.
 #  
 #
-__version__ = "0.2.0";
+__version__ = "0.2.1";
 
 from .core import ComparisonSession, DiffHunk, DiffResult, DocumentState, compare_texts, intraline_spans;
 
