@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sumdiff"
-version = "0.2.3"
+version = "0.2.4"
 description = "Lightweight multi-document compare, merge and parallel editing for the Sum ecosystem."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "GPL-2.0-or-later" }
 authors = [{ name = "William Martinez Bas", email = "metfar@gmail.com" }]
-dependencies = ["sumui>=0.1.0a5", "sumtui>=0.8.0a6"]
+dependencies = ["sumui>=0.1.0a6", "sumtui>=0.8.0a7"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -21,7 +21,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-gui = ["sumgui>=0.2.0a7"]
+gui = ["sumgui>=0.2.0a8"]
 
 [project.scripts]
 sumdiff = "sumdiff.__main__:main"

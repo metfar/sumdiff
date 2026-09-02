@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.3 - 2026-09-02
+## 0.2.4 - 2026-09-02
 - sumdiff now follows the ecosystem-wide ZX fresh-install default in both TUI and `--gui` mode.
 - Updated coordinated UI dependency floors.
 
