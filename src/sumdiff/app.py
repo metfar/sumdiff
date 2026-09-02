@@ -153,7 +153,7 @@ class SumDiffApp:
         self.paths = [Path(path).expanduser().resolve() for path in paths];
         if len(self.paths) < 2:
             raise ValueError("sumdiff requires at least two files");
-        self.app = Application(title="sumdiff", theme=theme or "Ralesk's MC", capture_control_keys=True, mouse=True);
+        self.app = Application(title="sumdiff", theme=theme or "ZX", capture_control_keys=True, mouse=True);
         self.documents = [TextDocument.load(path) for path in self.paths];
         overrides = {Path(path).expanduser().resolve(): str(text) for path, text in dict(text_overrides or {}).items()};
         for document in self.documents:
@@ -630,8 +630,8 @@ class SumDiffApp:
         self.app.invalidate();
         return True;
 
-    def run(self):
+    def run(self, backend="tui"):
         self.app.focus.set(self.active_pane().editor);
-        result = self.app.run();
+        result = self.app.run(backend=backend);
         self.workspace.save_layout();
         return result;

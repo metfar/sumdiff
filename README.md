@@ -126,4 +126,13 @@ sumdiff
 
 GNU General Public License, version 2 or (at your option) any later version.
 
+## One compare application, selectable presentation
+
+```bash
+sumdiff left.txt right.txt
+sumdiff --gui left.txt right.txt
+```
+
+Both commands construct the same `SumDiffApp`; the backend choice only changes presentation. Terminal mode keeps its keyboard and mouse support, while sumGUI supplies graphical keyboard/mouse/touch presentation.
+
 <p align=center><b>- oOo -<b></p>

@@ -24,6 +24,8 @@ import argparse;
 import sys;
 from pathlib import Path;
 
+from sumui import add_backend_arguments, backend_from_args;
+
 from . import __version__;
 from .app import SumDiffApp;
 
@@ -34,7 +36,8 @@ def build_parser():
     group.add_argument("--compare", action="store_true", help="compare documents and show line differences");
     group.add_argument("--parallel", action="store_true", help="link related documents without treating translations as textual differences");
     parser.add_argument("--ignore-whitespace", action="store_true", help="ignore leading/trailing whitespace while comparing");
-    parser.add_argument("--theme", default=None, help="sumTUI theme name");
+    parser.add_argument("--theme", default=None, help="Sum theme name");
+    add_backend_arguments(parser);
     parser.add_argument("--version", action="version", version="%(prog)s {}".format(__version__));
     parser.add_argument("files", nargs="+", help="two or more text files");
     return parser;
@@ -51,6 +54,7 @@ def choose_mode(args):
 def main(argv=None):
     parser = build_parser();
     args = parser.parse_args(argv);
+    ui_backend = backend_from_args(args);
     if len(args.files) < 2:
         parser.error("sumdiff requires at least two files");
     paths = [Path(item).expanduser() for item in args.files];
@@ -59,7 +63,7 @@ def main(argv=None):
         parser.error("file not found: {}".format(", ".join(missing)));
     try:
         application = SumDiffApp(paths, mode=choose_mode(args), theme=args.theme, ignore_whitespace=args.ignore_whitespace);
-        return application.run();
+        return application.run(backend=ui_backend);
     except KeyboardInterrupt:
         return 130;
     except Exception as exc:

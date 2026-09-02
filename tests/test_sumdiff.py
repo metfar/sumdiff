@@ -176,3 +176,21 @@ class HostIntegrationTests(unittest.TestCase):
             self.assertTrue(application.save_current());
             self.assertIn(left.resolve(), application.saved_paths);
             self.assertEqual(left.read_text(encoding="utf-8"), "changed\n");
+
+
+def test_sumdiff_gui_selects_same_application_backend(monkeypatch, tmp_path):
+    from sumdiff import __main__ as cli;
+    left = tmp_path / "left.txt";
+    right = tmp_path / "right.txt";
+    left.write_text("left\n", encoding="utf-8");
+    right.write_text("right\n", encoding="utf-8");
+    calls = [];
+    class FakeApp:
+        def __init__(self, paths, mode="compare", theme=None, ignore_whitespace=False):
+            calls.append(("init", tuple(paths), mode, theme, ignore_whitespace));
+        def run(self, backend="tui"):
+            calls.append(("run", backend));
+            return 0;
+    monkeypatch.setattr(cli, "SumDiffApp", FakeApp);
+    assert cli.main(["--gui", str(left), str(right)]) == 0;
+    assert calls[-1] == ("run", "gui");

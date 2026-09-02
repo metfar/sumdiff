@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.3 - 2026-09-02
+- sumdiff now follows the ecosystem-wide ZX fresh-install default in both TUI and `--gui` mode.
+- Updated coordinated UI dependency floors.
+
+## 0.2.2 - 2026-09-02
+
+- Added the common `--gui`, `--tui` and `--ui-backend` presentation selector. `sumdiff --gui` presents the same compare/parallel editing application rather than a second GUI implementation.
+- The same panes, diff model, editors, menus, focus, keyboard and mouse behavior are retained across presentations.
+- Updated dependencies to sumUI 0.1.0a4, sumTUI 0.8.0a5 and optional sumGUI 0.2.0a6.
+
 ## 0.2.0 - 2026-09-01
 
 - Promoted the compare/parallel editor to the current Sum editor baseline and now requires `sumTUI >= 0.7.0`.

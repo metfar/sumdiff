@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: sumdiff
-Version: 0.2.1
+Version: 0.2.3
 Summary: Lightweight multi-document compare, merge and parallel editing for the Sum ecosystem.
 Author-email: William Martinez Bas <metfar@gmail.com>
 License: GPL-2.0-or-later
@@ -13,8 +13,10 @@ Classifier: Topic :: Text Editors
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: sumui>=0.1.0a2
-Requires-Dist: sumtui>=0.8.0a2
+Requires-Dist: sumui>=0.1.0a5
+Requires-Dist: sumtui>=0.8.0a6
+Provides-Extra: gui
+Requires-Dist: sumgui>=0.2.0a7; extra == "gui"
 Dynamic: license-file
 
 # sumdiff
@@ -144,5 +146,14 @@ sumdiff
 ## License
 
 GNU General Public License, version 2 or (at your option) any later version.
+
+## One compare application, selectable presentation
+
+```bash
+sumdiff left.txt right.txt
+sumdiff --gui left.txt right.txt
+```
+
+Both commands construct the same `SumDiffApp`; the backend choice only changes presentation. Terminal mode keeps its keyboard and mouse support, while sumGUI supplies graphical keyboard/mouse/touch presentation.
 
 <p align=center><b>- oOo -<b></p>
