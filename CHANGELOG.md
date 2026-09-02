@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.5 - 2026-09-02
+- Updated coordinated UI dependency floors to the r16 common contracts and graphical backend.
+
 ## 0.2.4 - 2026-09-02
 - sumdiff now follows the ecosystem-wide ZX fresh-install default in both TUI and `--gui` mode.
 - Updated coordinated UI dependency floors.
