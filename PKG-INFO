@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: sumdiff
-Version: 0.2.6
+Version: 0.2.7
 Summary: Lightweight multi-document compare, merge and parallel editing for the Sum ecosystem.
 Author-email: William Martinez Bas <metfar@gmail.com>
 License: GPL-2.0-or-later
@@ -13,10 +13,10 @@ Classifier: Topic :: Text Editors
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: sumui>=0.1.0a8
-Requires-Dist: sumtui>=0.8.0a9
+Requires-Dist: sumui>=0.1.0a9
+Requires-Dist: sumtui>=0.8.0a10
 Provides-Extra: gui
-Requires-Dist: sumgui>=0.2.0a10; extra == "gui"
+Requires-Dist: sumgui>=0.2.0a11; extra == "gui"
 Dynamic: license-file
 
 # sumdiff
