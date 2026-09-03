@@ -135,4 +135,8 @@ sumdiff --gui left.txt right.txt
 
 Both commands construct the same `SumDiffApp`; the backend choice only changes presentation. Terminal mode keeps its keyboard and mouse support, while sumGUI supplies graphical keyboard/mouse/touch presentation.
 
+## r17 dependency alignment
+
+sumdiff is dependency-aligned with the r17 common UI/TUI/GUI layers; its application model remains unchanged.
+
 <p align=center><b>- oOo -<b></p>

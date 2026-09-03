@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6 - 2026-09-02
+
+- Coordinated r17 common UI/TUI/GUI dependency alignment.
+
 ## 0.2.5 - 2026-09-02
 - Updated coordinated UI dependency floors to the r16 common contracts and graphical backend.
 
